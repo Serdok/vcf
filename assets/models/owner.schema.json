@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "owner",
+  "title": "Owner",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "sex": {
+      "type": "string",
+      "enum": [
+        "male",
+        "female"
+      ]
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "city",
+        "campaign",
+        "suburb"
+      ]
+    },
+    "zipcode": {
+      "type": "integer"
+    },
+    "house": {
+      "type": "string",
+      "enum": [
+        "house",
+        "flat"
+      ]
+    },
+    "garden": {
+      "type": "boolean"
+    },
+    "animals": {
+      "type": "array",
+      "items": {
+        "$ref": "animal.schema.json"
+      }
+    }
+  }
+}

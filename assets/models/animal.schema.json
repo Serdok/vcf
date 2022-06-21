@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "animal",
+  "title": "Animal",
+  "type": "object",
+  "properties": {
+    "photo_url": {
+      "type": "string",
+      "description": "The URL of the photo of the animal"
+    },
+    "species": {
+      "type": "string",
+      "description": "The species of the animal"
+    },
+    "sex": {
+      "type": "string",
+      "enum": [
+        "male",
+        "female"
+      ],
+      "description": "The sex of the animal"
+    },
+    "race": {
+      "type": "string",
+      "description": "The race of the animal"
+    },
+    "birthdate": {
+      "type": "string",
+      "format": "date",
+      "description": "The date of birth of the animal"
+    },
+    "sterilized": {
+      "type": "boolean",
+      "description": "Is the animal sterilized?"
+    },
+    "traits": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "playful",
+          "agile",
+          "sporty",
+          "outdoors"
+        ]
+      },
+      "uniqueItems": true,
+      "additionalItems": false
+    },
+    "allergies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "taste": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "overweight": {
+      "type": "boolean"
+    },
+    "fur": {
+      "type": "boolean"
+    },
+    "pregnancy": {
+      "type": "boolean"
+    },
+    "breastfeeding": {
+      "type": "boolean"
+    }
+  }
+}
