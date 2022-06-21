@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "620856774443",
+    "project_id": "veto-carni-food",
+    "storage_bucket": "veto-carni-food.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620856774443:android:29d9c5dc042d6c6f917f6e",
+        "android_client_info": {
+          "package_name": "com.estiam.vet_carni_food"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620856774443-rc19k3or20gvlmv5nmj4oqpp5phu76mp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYL9rv_0GNF_LJlwrJlpCf2nQq3ekVjgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620856774443-rc19k3or20gvlmv5nmj4oqpp5phu76mp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "620856774443-o598qhcpo3d0rci19rrdc366crr2btmg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.estiam.vetCarniFood"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
