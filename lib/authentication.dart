@@ -107,7 +107,20 @@ class Authentication {
       user = usercredential.user;
     } on FirebaseAuthException catch(e){
       if(e.code=="user-not-found"){
-        print("aucun utilisateur trouvé avec ces identifiants");
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('AlertDialog Title'),
+            content: const Text("Votre mot de passe et/ou vos données d'authentification sont incorrectes"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('Cancel'),
+              ),
+
+            ],
+          ),
+        );
       }
     }
     return user;

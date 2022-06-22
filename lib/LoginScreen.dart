@@ -33,15 +33,20 @@ class _LoginScreenState extends State<LoginScreen>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children:  [
             const Text(
-              "App Title",
+              "VCF",
+
               style: TextStyle(
                 color: Colors.blue,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
 
               ),
+              textAlign: TextAlign.center,
             ),
-            const Text("un petit text de mittou !"),
+            const SizedBox(
+              height: 20.0,
+            ),
+            const Text("Un monde dans lequel les propriétaires de carnivores domestiques seraient éclairés sur le choix de l’alimentation pour leurs animaux. !", textAlign: TextAlign.center,),
             const SizedBox(
               height: 44.0,
             ),
