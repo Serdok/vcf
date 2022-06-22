@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:vet_carni_food/RegistrationScreen.dart';
 
 import 'LoginScreen.dart';
 import 'firebase_options.dart';
@@ -95,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(title: const Text('VetCarniFood Accueil')),
@@ -109,10 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPressed: () => scanBarcodeNormal(),
                             child: Text('Lancer le scan', style: TextStyle(color:Colors.white, fontSize: 18.0))),
                         ElevatedButton(
-                            onPressed: () async {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> LoginScreen() ));},
-                            child: const Text("Login", style: TextStyle(color:Colors.white, fontSize: 18.0))),
+                            onPressed: () async {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const LoginScreen() ));},
+                            child: const Text("Connexion", style: TextStyle(color:Colors.white, fontSize: 18.0))),
+                        ElevatedButton(
+                            onPressed: () async {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const RegistrationScreen()));},
+                            child: const Text("Inscription", style: TextStyle(color:Colors.white, fontSize: 18.0))),
                         Text('Scan result : $_scanBarcode\n',
-                            style: TextStyle(fontSize: 20)),
+                            style: const TextStyle(fontSize: 20)),
                       ]));
             })));
   }
