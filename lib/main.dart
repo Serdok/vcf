@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'VetCarniFood',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.indigo,
       ),
-      home: const MyHomePage(title: 'VetCarniFood'),
+      home: const MyHomePage(title: 'VetCarniFood Accueil'),
     );
   }
 }
@@ -60,7 +60,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _scanBarcode = 'Unknown';
-  String _de_em = 'Unknown';
   @override
   void initState() {
     super.initState();
@@ -98,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return MaterialApp(
         home: Scaffold(
-            appBar: AppBar(title: const Text('VetCarniFood')),
+            appBar: AppBar(title: const Text('VetCarniFood Accueil')),
             body: Builder(builder: (BuildContext context) {
               return Container(
                   alignment: Alignment.center,
@@ -108,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         ElevatedButton(
                             onPressed: () => scanBarcodeNormal(),
-                            child: Text('Lancer le scan')),
+                            child: Text('Lancer le scan', style: TextStyle(color:Colors.white, fontSize: 18.0))),
                         ElevatedButton(
                             onPressed: () async {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> LoginScreen() ));},
                             child: const Text("Login", style: TextStyle(color:Colors.white, fontSize: 18.0))),
