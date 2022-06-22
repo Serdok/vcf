@@ -110,12 +110,12 @@ class Authentication {
         showDialog<String>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-            title: const Text('AlertDialog Title'),
+            title: const Text("Message d'alerte"),
             content: const Text("La combinaison du mail/mot de passe est incorrecte"),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context, 'OK'),
-                child: const Text('Cancel'),
+                child: const Text('OK'),
               ),
 
             ],
