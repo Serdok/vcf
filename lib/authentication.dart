@@ -111,7 +111,7 @@ class Authentication {
           context: context,
           builder: (BuildContext context) => AlertDialog(
             title: const Text('AlertDialog Title'),
-            content: const Text("Votre mot de passe et/ou vos données d'authentification sont incorrectes"),
+            content: const Text("La combinaison du mail/mot de passe est incorrecte"),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context, 'OK'),
