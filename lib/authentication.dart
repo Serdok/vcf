@@ -3,9 +3,24 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:vet_carni_food/services/database.dart';
+
+import 'models/user.dart';
 
 
 class Authentication {
+
+
+  static AppUser? _userFromFirebaseUser(User? user) {
+    return user != null ? AppUser(user.uid) : null;
+  }
+
+  Stream<AppUser?> get user {
+    final FirebaseAuth aut = FirebaseAuth.instance;
+    return aut.authStateChanges().map(_userFromFirebaseUser);
+  }
+
+
   static SnackBar customSnackBar({required String content}) {
     return SnackBar(
       backgroundColor: Colors.black,
@@ -100,16 +115,48 @@ class Authentication {
   }
   static Future<User?> LoginUsingEmailPassword({required String email,required String password ,required BuildContext context}) async {
 
-    FirebaseAuth aut = FirebaseAuth.instance;
+    final FirebaseAuth aut = FirebaseAuth.instance;
     User? user;
     try{
-      UserCredential usercredential = await aut.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential usercredential =
+      await aut.signInWithEmailAndPassword(email: email, password: password);
       user = usercredential.user;
     } on FirebaseAuthException catch(e){
       if(e.code=="user-not-found"){
-        print("aucun utilisateur trouvé avec ces identifiants");
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text("Message d'alerte"),
+            content: const Text("La combinaison du mail/mot de passe est incorrecte"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK'),
+              ),
+
+            ],
+          ),
+        );
       }
     }
     return user;
+  }
+
+  static Future<AppUser?> registerWithEmailAndPassword({required String email, required String password, required BuildContext context}) async {
+    final FirebaseAuth aut = FirebaseAuth.instance;
+    try {
+      UserCredential result =
+      await aut.createUserWithEmailAndPassword(email: email, password: password);
+      User? user = result.user;
+      if (user == null) {
+        throw Exception("No user found");
+      } else {
+        await DatabaseService(user.uid).saveUser(email, 0);
+
+        return _userFromFirebaseUser(user);
+      }
+    } catch (exception) {
+      return null;
+    }
   }
 }

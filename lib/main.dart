@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:vet_carni_food/RegistrationScreen.dart';
 
 import 'LoginScreen.dart';
 import 'home.dart';
@@ -119,12 +120,12 @@ class _MyHomePageState extends State<MyHomePage> {
       User user = FirebaseAuth.instance.currentUser!;
       screens = [UserInfoScreen(user: user),Home(), UserInfoScreen(user: user)];
     } else {
-      screens = [const LoginScreen(), Home(), const LoginScreen()];
+      screens = [const LoginScreen(), Home(), const RegistrationScreen()];
     }
 
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(title: const Text('VetCarniFood')),
+      appBar: AppBar(title: const Text('VetCarniFood Accueil')),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
