@@ -1,15 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:vet_carni_food/RegistrationScreen.dart';
 
 import 'LoginScreen.dart';
-import 'home.dart';
-import 'ProfileScreen.dart';
 import 'UserInfoScreen.dart';
 import 'firebase_options.dart';
+import 'home.dart';
 
 void main() async {
   // Initialize Firebase
@@ -26,11 +23,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
       title: 'VetCarniFood',
-
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -67,60 +61,38 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _scanBarcode = 'Unknown';
   PageController pageController = PageController();
   LoginScreen loginScreen = const LoginScreen();
-  bool userConnected = false;
+  bool userConnected = FirebaseAuth.instance.currentUser != null;
+
   @override
   void initState() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      setState(() {
-        userConnected = user != null;
-      });
-    });
     super.initState();
-  }
-
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> scanBarcodeNormal() async {
-    String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _scanBarcode = barcodeScanRes;
-    });
   }
 
   int currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      setState(() {
+        userConnected = (user != null);
+        print('connected? $userConnected');
+      });
+    });
+
     List screens = [];
 
     if (userConnected) {
       User user = FirebaseAuth.instance.currentUser!;
-      screens = [UserInfoScreen(user: user),Home(), UserInfoScreen(user: user)];
+      print('build main: $user');
+      screens = [
+        UserInfoScreen(user: user),
+        const Home(),
+        UserInfoScreen(user: user)
+      ];
     } else {
-      screens = [const LoginScreen(), Home(), const RegistrationScreen()];
+      screens = [const LoginScreen(), const Home(), const RegistrationScreen()];
     }
 
     return MaterialApp(

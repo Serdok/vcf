@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:vet_carni_food/services/database.dart';
 
 import 'models/user.dart';
@@ -26,7 +25,7 @@ class Authentication {
       backgroundColor: Colors.black,
       content: Text(
         content,
-        style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
+        style: const TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
       ),
     );
   }

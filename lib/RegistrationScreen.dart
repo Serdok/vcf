@@ -1,12 +1,7 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:vet_carni_food/models/user.dart';
 
 import 'ProfileScreen.dart';
-import 'UserInfoScreen.dart';
 import 'authentication.dart';
 
 
@@ -14,8 +9,7 @@ class RegistrationScreen extends StatefulWidget{
   const RegistrationScreen ({Key? key}) : super (key: key);
 
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
-
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 class _RegistrationScreenState extends State<RegistrationScreen>{
 

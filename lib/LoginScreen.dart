@@ -1,11 +1,7 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'ProfileScreen.dart';
-import 'UserInfoScreen.dart';
 import 'authentication.dart';
 
 
@@ -13,8 +9,7 @@ class LoginScreen extends StatefulWidget{
   const LoginScreen ({Key? key}) : super (key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
-
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 class _LoginScreenState extends State<LoginScreen>{
 
@@ -64,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen>{
             TextField(
               controller:  _passwordController,
               obscureText: true,
-              decoration:  InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "User Password",
                 prefixIcon: Icon(Icons.password, color: Colors.blue),
               ),
@@ -79,18 +74,23 @@ class _LoginScreenState extends State<LoginScreen>{
             const SizedBox(
               height: 60.0,
             ),
-            Container(
-              width : double.infinity,
+            SizedBox(
+              width: double.infinity,
               child: RawMaterialButton(
-                fillColor:  Colors.blue,
+                fillColor: Colors.blue,
                 elevation: 0.0,
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0)),
                 onPressed: () async {
-                  User? user = await  Authentication.LoginUsingEmailPassword(email: _emailController.text,password: _passwordController.text, context: context);
+                  User? user = await Authentication.LoginUsingEmailPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      context: context);
                   print(user);
-                  if(user!=null){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen() ));
+                  if (user != null) {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const ProfileScreen()));
                   }
 
                 },

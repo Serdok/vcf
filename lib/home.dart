@@ -1,28 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
 import 'LoginScreen.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
-  State createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   String _scanBarcode = 'Unknown';
   PageController pageController = PageController();
-  bool userConnected = false;
 
   @override
   void initState() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      setState(() {
-        userConnected = user != null;
-      });
-    });
     super.initState();
   }
 
@@ -77,27 +71,21 @@ class _HomeState extends State<Home> {
                   )),
                   ElevatedButton(
                       onPressed: () => scanBarcodeNormal(),
-                      child: Text('Lancer le scan',
+                      child: const Text('Lancer le scan',
                           style:
                               TextStyle(color: Colors.white, fontSize: 18.0))),
                   ElevatedButton(
                       onPressed: () async {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
+                            builder: (context) => const LoginScreen()));
                       },
                       child: const Text("Login",
                           style:
                               TextStyle(color: Colors.white, fontSize: 18.0))),
                   Text('Scan result : $_scanBarcode\n',
-                      style: TextStyle(fontSize: 20)),
+                      style: const TextStyle(fontSize: 20)),
                 ]));
       }),
     ));
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
   }
 }
