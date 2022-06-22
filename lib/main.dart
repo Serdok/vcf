@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:vet_carni_food/RegistrationScreen.dart';
 
 import 'LoginScreen.dart';
 import 'firebase_options.dart';
@@ -84,6 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center ,
         crossAxisAlignment: CrossAxisAlignment.start,
         children:  [
+          Spacer(),
+          /* Bouton Connexion */
           Container(
             width : double.infinity,
             child: RawMaterialButton(
@@ -96,7 +99,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
               },
-              child: const Text("Login", style: TextStyle(color:Colors.white, fontSize: 18.0)),
+              child: const Text("Connexion", style: TextStyle(color:Colors.white, fontSize: 18.0)),
+            ),
+          ),
+          Spacer(),
+          /* Bouton Inscription */
+          Container(
+            width : double.infinity,
+            child: RawMaterialButton(
+              fillColor:  Colors.blue,
+              elevation: 1.0,
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              onPressed: () async {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> RegistrationScreen() ));
+
+
+              },
+              child: const Text("Inscription", style: TextStyle(color:Colors.white, fontSize: 18.0)),
             ),
           ),
 
