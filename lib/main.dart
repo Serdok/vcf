@@ -1,12 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'LoginScreen.dart';
+import 'home.dart';
+import 'ProfileScreen.dart';
+import 'UserInfoScreen.dart';
 import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  // Initialize Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -16,13 +25,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // Initialize Firebase
-    Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+
 
     return MaterialApp(
       title: 'VetCarniFood',
+
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -60,10 +67,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _scanBarcode = 'Unknown';
+  PageController pageController = PageController();
+  LoginScreen loginScreen = const LoginScreen();
+  bool userConnected = false;
   @override
   void initState() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      setState(() {
+        userConnected = user != null;
+      });
+    });
     super.initState();
   }
+
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> scanBarcodeNormal() async {
@@ -87,6 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  int currentIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -95,25 +113,40 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    List screens = [];
+
+    if (userConnected) {
+      User user = FirebaseAuth.instance.currentUser!;
+      screens = [UserInfoScreen(user: user),Home(), UserInfoScreen(user: user)];
+    } else {
+      screens = [const LoginScreen(), Home(), const LoginScreen()];
+    }
+
     return MaterialApp(
         home: Scaffold(
-            appBar: AppBar(title: const Text('VetCarniFood Accueil')),
-            body: Builder(builder: (BuildContext context) {
-              return Container(
-                  alignment: Alignment.center,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton(
-                            onPressed: () => scanBarcodeNormal(),
-                            child: Text('Lancer le scan', style: TextStyle(color:Colors.white, fontSize: 18.0))),
-                        ElevatedButton(
-                            onPressed: () async {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> LoginScreen() ));},
-                            child: const Text("Login", style: TextStyle(color:Colors.white, fontSize: 18.0))),
-                        Text('Scan result : $_scanBarcode\n',
-                            style: TextStyle(fontSize: 20)),
-                      ]));
-            })));
+      appBar: AppBar(title: const Text('VetCarniFood')),
+      body: screens[currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() => currentIndex = index),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'account',
+              backgroundColor: Colors.indigo),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'home',
+              backgroundColor: Colors.indigo),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'history',
+              backgroundColor: Colors.indigo)
+        ],
+        selectedItemColor: const Color(0xFFB0F2B6),
+        unselectedItemColor: Colors.grey,
+      ),
+    ));
   }
 }
