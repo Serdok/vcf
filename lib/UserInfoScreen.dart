@@ -50,10 +50,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: AppBar(
-        elevation: 0,
-
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
