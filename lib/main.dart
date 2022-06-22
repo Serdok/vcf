@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'LoginScreen.dart';
 import 'firebase_options.dart';
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'VetCarniFood',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -31,9 +33,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'VetCarniFood Accueil'),
     );
   }
 }
@@ -57,16 +59,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String _scanBarcode = 'Unknown';
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  void _incrementCounter() {
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _scanBarcode = barcodeScanRes;
     });
   }
 
@@ -78,31 +95,25 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center ,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:  [
-          Container(
-            width : double.infinity,
-            child: RawMaterialButton(
-              fillColor:  Colors.blue,
-              elevation: 0.0,
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-              onPressed: () async {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> LoginScreen() ));
-
-
-              },
-              child: const Text("Login", style: TextStyle(color:Colors.white, fontSize: 18.0)),
-            ),
-          ),
-
-        ],
-
-      ),
-    );
+    return MaterialApp(
+        home: Scaffold(
+            appBar: AppBar(title: const Text('VetCarniFood Accueil')),
+            body: Builder(builder: (BuildContext context) {
+              return Container(
+                  alignment: Alignment.center,
+                  child: Flex(
+                      direction: Axis.vertical,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        ElevatedButton(
+                            onPressed: () => scanBarcodeNormal(),
+                            child: Text('Lancer le scan', style: TextStyle(color:Colors.white, fontSize: 18.0))),
+                        ElevatedButton(
+                            onPressed: () async {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> LoginScreen() ));},
+                            child: const Text("Login", style: TextStyle(color:Colors.white, fontSize: 18.0))),
+                        Text('Scan result : $_scanBarcode\n',
+                            style: TextStyle(fontSize: 20)),
+                      ]));
+            })));
   }
 }
