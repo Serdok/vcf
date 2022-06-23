@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vet_carni_food/RegistrationScreen.dart';
 
 import 'ProfileScreen.dart';
 import 'authentication.dart';
+import 'main.dart';
 
 
 class LoginScreen extends StatefulWidget{
@@ -49,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen>{
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: const  InputDecoration(
-                hintText: "User Email",
+                hintText: "Email",
                 prefixIcon: Icon(Icons.mail, color: Colors.blue),
               ),
             ),
@@ -60,14 +62,14 @@ class _LoginScreenState extends State<LoginScreen>{
               controller:  _passwordController,
               obscureText: true,
               decoration: const InputDecoration(
-                hintText: "User Password",
+                hintText: "Mot de passe",
                 prefixIcon: Icon(Icons.password, color: Colors.blue),
               ),
             ),
             const SizedBox(
               height: 10.0,
             ),
-            const Text("mot de pass oublié!",
+            const Text("mot de passe oublié !",
               style: TextStyle(
                 color: Colors.blue,)
               ,),
@@ -90,16 +92,32 @@ class _LoginScreenState extends State<LoginScreen>{
                   print(user);
                   if (user != null) {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const ProfileScreen()));
+                        builder: (context) => const MyHomePage(title: '',)));
                   }
 
                 },
-                child: const Text("Login", style: TextStyle(color:Colors.white, fontSize: 18.0)),
+                child: const Text("Connection", style: TextStyle(color:Colors.white, fontSize: 18.0)),
               ),
             ),
+            const SizedBox(
+              height : 18
+            ),
+            SizedBox(
+                width: double.infinity,
+                child: RawMaterialButton(
+                    fillColor: Colors.blue,
+                    elevation: 0.0,
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0)),
 
-
-
+                    onPressed: () async {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const RegistrationScreen()));
+                },
+                    child: const Text("Inscription",
+                        style:
+                        TextStyle(color: Colors.white, fontSize: 18.0))),),
           ],
 
         ),

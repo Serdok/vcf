@@ -7,6 +7,7 @@ import 'LoginScreen.dart';
 import 'UserInfoScreen.dart';
 import 'firebase_options.dart';
 import 'home.dart';
+import 'faq.dart';
 
 void main() async {
   // Initialize Firebase
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.indigo,
       ),
-      home: const MyHomePage(title: 'VetCarniFood Accueil'),
+      home: const MyHomePage(title: 'VetCarniFood'),
     );
   }
 }
@@ -88,16 +89,16 @@ class _MyHomePageState extends State<MyHomePage> {
       print('build main: $user');
       screens = [
         UserInfoScreen(user: user),
-        const Home(),
-        UserInfoScreen(user: user)
+        const Home(userIsConnected: true,),
+        Faq()
       ];
     } else {
-      screens = [const LoginScreen(), const Home(), const RegistrationScreen()];
+      screens = [const LoginScreen(), const Home(userIsConnected: false,), Faq()];
     }
 
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(title: const Text('VetCarniFood Accueil')),
+      appBar: AppBar(title: const Text('VetCarniFood')),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -113,8 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'home',
               backgroundColor: Colors.indigo),
           BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'history',
+              icon: Icon(Icons.question_answer),
+              label: 'FAQ',
               backgroundColor: Colors.indigo)
         ],
         selectedItemColor: const Color(0xFFB0F2B6),
