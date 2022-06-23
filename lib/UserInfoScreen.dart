@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'LoginScreen.dart';
 import 'authentication.dart';
+import 'main.dart';
 
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({Key? key, required this.user}) : super(key: key);
@@ -19,7 +20,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Route _routeToSignInScreen() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          const LoginScreen(),
+          const MyHomePage(title: '',),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = const Offset(-1.0, 0.0);
         var end = Offset.zero;
