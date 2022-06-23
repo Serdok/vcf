@@ -40,6 +40,7 @@ dependencies:
   cloud_firestore: ^3.1.18
   firebase_storage: ^10.2.18
   google_sign_in: ^5.0.0
+  expandable: ^5.0.1
 
   flutter_plugin_android_lifecycle: ^2.0.0-nullsafety
 

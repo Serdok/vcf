@@ -7,6 +7,7 @@ import 'LoginScreen.dart';
 import 'UserInfoScreen.dart';
 import 'firebase_options.dart';
 import 'home.dart';
+import 'faq.dart';
 
 void main() async {
   // Initialize Firebase
@@ -89,10 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
       screens = [
         UserInfoScreen(user: user),
         const Home(),
-        UserInfoScreen(user: user)
+        UserInfoScreen(user: user),
+        Faq()
       ];
     } else {
-      screens = [const LoginScreen(), const Home(), const RegistrationScreen()];
+      screens = [const LoginScreen(), const Home(), const RegistrationScreen(), Faq()];
     }
 
     return MaterialApp(
@@ -115,6 +117,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.history),
               label: 'history',
+              backgroundColor: Colors.indigo),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.question_answer),
+              label: 'FAQ',
               backgroundColor: Colors.indigo)
         ],
         selectedItemColor: const Color(0xFFB0F2B6),
