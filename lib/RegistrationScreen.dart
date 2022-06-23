@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'ProfileScreen.dart';
 import 'authentication.dart';
 import 'main.dart';
 
@@ -99,8 +98,12 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                       await  Authentication.registerWithEmailAndPassword(email: emailController.text,password: passwordController.text, context: context);
                       User? user = await  Authentication.LoginUsingEmailPassword(email: emailController.text,password: passwordController.text, context: context);
                       print(user);
-                      if(user!=null){
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const MyHomePage(title: '') ));
+                      if(user!=null) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const MyHomePage(
+                                  title: '',
+                                  noNavigation: true,
+                                )));
                       }
                     } else {
                       showDialog<String>(

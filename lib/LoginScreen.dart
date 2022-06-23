@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'ProfileScreen.dart';
 import 'authentication.dart';
 import 'main.dart';
 
@@ -91,7 +90,8 @@ class _LoginScreenState extends State<LoginScreen>{
                   print(user);
                   if (user != null) {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const MyHomePage(title:'')));
+                        builder: (context) =>
+                            const MyHomePage(title: '', noNavigation: true)));
                   }
 
                 },

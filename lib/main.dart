@@ -37,13 +37,17 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.indigo,
       ),
-      home: const MyHomePage(title: 'VetCarniFood Accueil'),
+      home: const MyHomePage(
+        title: 'VetCarniFood Accueil',
+        noNavigation: false,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title, required this.noNavigation})
+      : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -55,6 +59,7 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  final bool noNavigation;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -97,29 +102,33 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(title: const Text('VetCarniFood Accueil')),
+      appBar: !widget.noNavigation
+          ? AppBar(title: const Text('VetCarniFood Accueil'))
+          : null,
       body: screens[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'account',
-              backgroundColor: Colors.indigo),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'home',
-              backgroundColor: Colors.indigo),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              label: 'history',
-              backgroundColor: Colors.indigo)
-        ],
-        selectedItemColor: const Color(0xFFB0F2B6),
-        unselectedItemColor: Colors.grey,
-      ),
+      bottomNavigationBar: !widget.noNavigation
+          ? BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: currentIndex,
+              onTap: (index) => setState(() => currentIndex = index),
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person),
+                    label: 'account',
+                    backgroundColor: Colors.indigo),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'home',
+                    backgroundColor: Colors.indigo),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.history),
+                    label: 'history',
+                    backgroundColor: Colors.indigo)
+              ],
+              selectedItemColor: const Color(0xFFB0F2B6),
+              unselectedItemColor: Colors.grey,
+            )
+          : const SizedBox.shrink(),
     ));
   }
 }
