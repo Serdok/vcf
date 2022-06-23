@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'ProfileScreen.dart';
 import 'authentication.dart';
+import 'main.dart';
 
 
 class LoginScreen extends StatefulWidget{
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen>{
                   print(user);
                   if (user != null) {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const ProfileScreen()));
+                        builder: (context) => const MyHomePage(title:'')));
                   }
 
                 },

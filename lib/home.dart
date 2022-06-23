@@ -5,8 +5,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'LoginScreen.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({Key? key, required this.userIsConnected}) : super(key: key);
 
+  final bool userIsConnected;
   @override
   State<Home> createState() => _HomeState();
 }
@@ -74,14 +75,16 @@ class _HomeState extends State<Home> {
                       child: const Text('Lancer le scan',
                           style:
                               TextStyle(color: Colors.white, fontSize: 18.0))),
-                  ElevatedButton(
-                      onPressed: () async {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
-                      },
-                      child: const Text("Login",
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 18.0))),
+                Visibility(visible: widget.userIsConnected,
+                    child:  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
+                    },
+                    child: const Text("Login",
+                        style:
+                        TextStyle(color: Colors.white, fontSize: 18.0))))
+               ,
                   Text('Scan result : $_scanBarcode\n',
                       style: const TextStyle(fontSize: 20)),
                 ]));

@@ -88,11 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
       print('build main: $user');
       screens = [
         UserInfoScreen(user: user),
-        const Home(),
+        const Home(userIsConnected: true,),
         UserInfoScreen(user: user)
       ];
     } else {
-      screens = [const LoginScreen(), const Home(), const RegistrationScreen()];
+      screens = [const LoginScreen(), const Home(userIsConnected: false), const RegistrationScreen()];
     }
 
     return MaterialApp(

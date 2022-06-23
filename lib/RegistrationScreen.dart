@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'ProfileScreen.dart';
 import 'authentication.dart';
+import 'main.dart';
 
 
 class RegistrationScreen extends StatefulWidget{
@@ -99,7 +100,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                       User? user = await  Authentication.LoginUsingEmailPassword(email: emailController.text,password: passwordController.text, context: context);
                       print(user);
                       if(user!=null){
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const ProfileScreen() ));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const MyHomePage(title: '') ));
                       }
                     } else {
                       showDialog<String>(
