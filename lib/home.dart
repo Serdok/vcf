@@ -13,6 +13,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String _scanBarcode = 'Unknown';
+  String _marque = 'Unknown';
+  String _deEm = 'Unknown';
+  String _ena = 'Unknown';
+  String _rpc = 'Unknown';
+  String _rpp = 'Unknown';
   PageController pageController = PageController();
 
   @override
@@ -40,6 +45,27 @@ class _HomeState extends State<Home> {
     setState(() {
       if (barcodeScanRes == "-1") {
         _scanBarcode = "Unknown";
+      } else if (barcodeScanRes == "3 222270 007962") {
+        _scanBarcode = barcodeScanRes;
+        _marque = "Friskies (chat)";
+        _deEm = "323 Kcal/100g";
+        _ena = "37";
+        _rpc = "95,97 g/Mkal";
+        _rpp = "Inconnu car non calculable";
+      } else if (barcodeScanRes == "5 998749 129043") {
+        _scanBarcode = barcodeScanRes;
+        _marque = "Whiskas (Chat) ";
+        _deEm = "340,4 Kcal/100g ";
+        _ena = "38,6";
+        _rpc = "88,13 g/Mkal ";
+        _rpp = "Inconnu car non calculable";
+      } else if (barcodeScanRes == "4 008429 086670") {
+        _scanBarcode = barcodeScanRes;
+        _marque = "Frolic (Chien)";
+        _deEm = "341,5 Kcal/100g ";
+        _ena = "40,5";
+        _rpc = "49,78 g/Mkal  ";
+        _rpp = "18,9 = Seuil déconseillé ";
       } else {
         _scanBarcode = barcodeScanRes;
       }
@@ -70,19 +96,29 @@ class _HomeState extends State<Home> {
                     child: Image.asset('assets/images/logoVCF.png'),
                   )),
                   ElevatedButton(
-                      onPressed: () => scanBarcodeNormal(),
-                      child: const Text('Lancer le scan',
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 18.0))),
-                  ElevatedButton(
                       onPressed: () async {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => const LoginScreen()));
                       },
                       child: const Text("Login",
                           style:
+                          TextStyle(color: Colors.white, fontSize: 18.0))),
+                  ElevatedButton(
+                      onPressed: () => scanBarcodeNormal(),
+                      child: const Text('Lancer le scan',
+                          style:
                               TextStyle(color: Colors.white, fontSize: 18.0))),
                   Text('Scan result : $_scanBarcode\n',
+                      style: const TextStyle(fontSize: 20)),
+                  Text('Marque : $_marque\n',
+                      style: const TextStyle(fontSize: 20)),
+                  Text('DE/EM : $_deEm\n',
+                      style: const TextStyle(fontSize: 20)),
+                  Text('ENA : $_ena\n',
+                      style: const TextStyle(fontSize: 20)),
+                  Text('RPC : $_rpc\n',
+                      style: const TextStyle(fontSize: 20)),
+                  Text('RPP : $_rpp\n',
                       style: const TextStyle(fontSize: 20)),
                 ]));
       }),
